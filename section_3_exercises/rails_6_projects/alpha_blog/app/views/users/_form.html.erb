@@ -23,7 +23,7 @@
         </div>
         <div class="form-group d-flex flex-row-reverse">
           <%= link_to "Cancel", root_path, class: "btn btn-outline-danger btn-lg ml-2" %>
-          <%= f.submit "Sign up", class: "btn btn-outline-primary btn-lg"%>
+          <%= f.submit(@user.new_record? ? "Sign up" : "Update profile", class: "btn btn-outline-primary btn-lg") %>
         </div>
       <% end %>
     </div>
