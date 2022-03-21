@@ -1,15 +1,17 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_user, except: [:new, :create, :show, :index, :destroy]
+  before_action only: [:edit, :update, :destroy] do only_for(@user, users_path) end
 
   def show
     set_user
-    @articles = @user.articles.paginate(page: params[:page], per_page: 3 )
+    @articles = @user.articles.paginate(page: params[:page], per_page: 3)
   end
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 3 )
+    @users = User.paginate(page: params[:page], per_page: 3)
   end
-  
+
   def new
     @user = User.new
   end
@@ -26,6 +28,13 @@ class UsersController < ApplicationController
     else
       render "new"
     end
+  end
+
+  def destroy
+    @user.destroy
+    session[:user_id] = nil
+    flash[:notice] = "Account and all associated articles succesfully deleted"
+    redirect_to root_path
   end
 
   def update

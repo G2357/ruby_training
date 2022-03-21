@@ -13,8 +13,10 @@
           <div class="card-body">
             <h5 class="card-title"><%= link_to gravatar_for(user, size: 150), user %></h5>
             <p class="card-text mt-3"><%= pluralize(user.articles.count, "article") %></p>
-            <%= link_to "View profile", user, class: "btn btn-outline-info" %>
-            <%= link_to "Edit", edit_user_path(user), class: "btn btn-outline-secondary" %>
+            <% if logged_in? && user == current_user %>
+              <%= link_to "View profile", user, class: "btn btn-outline-info" %>
+              <%= link_to "Edit profile", edit_user_path(user), class: "btn btn-outline-secondary" %>
+            <% end %>
           </div>
           <div class="card-footer text-muted">
             <small>
