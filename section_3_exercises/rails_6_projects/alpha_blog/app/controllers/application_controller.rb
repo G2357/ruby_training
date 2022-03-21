@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def only_for(user, path)
-    if current_user != user
+    if current_user != user && !current_user.admin?
       byebug
       flash[:alert] = "You're not authorized to do that"
       redirect_to path
